@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "SVjEx9Sev18eviHgbc0CkZL7srg20K5xuUeOSaTmtIk=",
+  "Source": "CA-Microservices-DotNet.API",
+  "BasePath": "_content/CA-Microservices-DotNet.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

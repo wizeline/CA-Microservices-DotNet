@@ -1,0 +1,16 @@
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\bin\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.deps.json
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\bin\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.dll
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\bin\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.pdb
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\bin\Debug\net8.0\CA-Microservices-DotNet.Domain.dll
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\bin\Debug\net8.0\CA-Microservices-DotNet.Domain.pdb
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.csproj.AssemblyReference.cache
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.AssemblyInfoInputs.cache
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.AssemblyInfo.cs
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.csproj.CoreCompileInputs.cache
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.sourcelink.json
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.csproj.CopyComplete
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.dll
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\refint\CA-Microservices-DotNet.Infrastructure.dll
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\CA-Microservices-DotNet.Infrastructure.pdb
+C:\dev\CA-Microservices-DotNet\CA-Microservices-DotNet.Infrastructure\obj\Debug\net8.0\ref\CA-Microservices-DotNet.Infrastructure.dll

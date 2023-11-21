@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\CA-Microservices-DotNet.API.props" />
+</Project>
