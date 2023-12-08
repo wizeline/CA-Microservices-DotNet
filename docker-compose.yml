@@ -1,0 +1,37 @@
+version: '3.4'
+
+networks:
+  ca-microservices-dotnet-network:
+
+services:
+  ca-microservices-sql-db: 
+    container_name: sql-database
+    image: mcr.microsoft.com/mssql/server:2022-CU10-ubuntu-22.04
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password01!
+      - SA_USER=sa    
+      - MSSQL_PID=Evaluation
+    networks:
+      - ca-microservices-dotnet-network
+
+  ca-microservices-dotnet.api:
+    container_name: ca-microservice-dotnet
+    image: ${DOCKER_REGISTRY-}camicroservicesdotnetapi
+    build:
+      context: .
+      dockerfile: CA-Microservices-DotNet.API/Dockerfile
+    ports:
+      - 8001:80
+    depends_on:
+      - ca-microservices-sql-db
+    environment:
+      - DB_HOST=ca-microservices-sql-db
+      - DB_NAME=CA-Microservices-DotNet
+      - DB_SA_PASSWORD=Password01!
+      - DB_PORT=1433
+      - DB_SA_USER=sa
+    networks:
+      - ca-microservices-dotnet-network
