@@ -16,12 +16,12 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //Add DBContext where the Identity tables are going to be created.
-var test = builder.Configuration.GetConnectionString("DefaultConnection");
+var conString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(conString));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 
 //Add Swagger bearer token authentication 
@@ -48,14 +48,18 @@ var app = builder.Build();
 //NET 8 mapping of Identity tables
 app.MapIdentityApi<IdentityUser>();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    //Run migrations only in DEVELOPMENT environment
+    using var scope = app.Services.CreateScope();
+    using var dbContext = scope.ServiceProvider.GetRequiredService<MyDbContext>();
+    dbContext.Database.EnsureCreated();
 }
 
-
+// Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
