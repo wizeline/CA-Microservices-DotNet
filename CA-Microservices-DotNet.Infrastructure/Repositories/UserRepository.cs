@@ -11,8 +11,9 @@ namespace CA_Microservices_DotNet.Infrastructure.Repositories
     public class UserRepository : IUserRepository
     { 
         private readonly List<User> _users = [];
+        private readonly MyDbContext _dbContext;
 
-        public UserRepository()
+        public UserRepository(MyDbContext dbContext)
         {
             _users = new List<User>()
             {
@@ -43,6 +44,7 @@ namespace CA_Microservices_DotNet.Infrastructure.Repositories
                     Phone = "8113698521"
                 }
             };
+            _dbContext = dbContext;
         }
 
         /// <inheritdoc/>

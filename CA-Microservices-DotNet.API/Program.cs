@@ -1,8 +1,11 @@
+using CA_Microservices_DotNet.API.HealthCheck;
 using CA_Microservices_DotNet.Application.Services;
 using CA_Microservices_DotNet.Domain.Interfaces.Repositories;
 using CA_Microservices_DotNet.Domain.Interfaces.Services;
 using CA_Microservices_DotNet.Infrastructure;
 using CA_Microservices_DotNet.Infrastructure.Repositories;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Filters;
@@ -23,6 +26,10 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
+//builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddCheck<SampleHealthCheck>("Sample");
 
 //Add Swagger bearer token authentication 
 builder.Services.AddSwaggerGen(options =>
@@ -47,6 +54,12 @@ var app = builder.Build();
 
 //NET 8 mapping of Identity tables
 app.MapIdentityApi<IdentityUser>();
+
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
 
 if (app.Environment.IsDevelopment())
 {
