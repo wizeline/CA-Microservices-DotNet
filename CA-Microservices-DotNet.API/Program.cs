@@ -27,7 +27,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
-//builder.Services.AddHealthChecks();
 builder.Services.AddHealthChecks()
     .AddCheck<SampleHealthCheck>("Sample");
 
