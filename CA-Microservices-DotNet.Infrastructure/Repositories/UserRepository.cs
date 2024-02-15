@@ -1,10 +1,6 @@
 ﻿using CA_Microservices_DotNet.Domain.Entities;
 using CA_Microservices_DotNet.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CA_Microservices_DotNet.Infrastructure.Repositories
 {
@@ -19,7 +15,7 @@ namespace CA_Microservices_DotNet.Infrastructure.Repositories
             {
                 new()
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid().ToString(),
                     FirstName = "Rebeca",
                     LastName = "Lozano",
                     SecondLastName = "",
@@ -28,7 +24,7 @@ namespace CA_Microservices_DotNet.Infrastructure.Repositories
                 },
                 new()
                 {
-                    Id = 2,
+                    Id = Guid.NewGuid().ToString(),
                     FirstName = "Karla",
                     LastName = "Melendez",
                     SecondLastName = "Rios",
@@ -37,6 +33,7 @@ namespace CA_Microservices_DotNet.Infrastructure.Repositories
                 },
                 new()
                 {
+                    Id = Guid.NewGuid().ToString(),
                     FirstName = "Luis",
                     LastName = "Hernandez",
                     SecondLastName = "Perez",
@@ -50,16 +47,13 @@ namespace CA_Microservices_DotNet.Infrastructure.Repositories
         /// <inheritdoc/>
         public Task<List<User>> GetAllUsers()
         {
-            return Task.FromResult(_users);
+            return _dbContext.Users.ToListAsync();
         }
 
         /// <inheritdoc/>
-        public Task<User> GetUser(int id)
+        public Task<User?> GetUser(string id)
         {
-            var user = _users.Find(b => b.Id == id)
-                ?? new User();
-
-            return Task.FromResult(user);
+            return _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

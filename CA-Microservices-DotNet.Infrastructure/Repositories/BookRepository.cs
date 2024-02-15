@@ -1,68 +1,29 @@
 ﻿using CA_Microservices_DotNet.Domain.Entities;
 using CA_Microservices_DotNet.Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CA_Microservices_DotNet.Infrastructure.Repositories
 {
     public class BookRepository : IBookRepository
     {
         private readonly List<Book> _books = [];
+        private readonly MyDbContext _dbContext;
 
-        public BookRepository()
+        public BookRepository(MyDbContext dbContext)
         {
-            _books = new List<Book>()
-            {
-                new()
-                {
-                    Id = 1,
-                    Name = "The Lord of the Rings",
-                    Description = "This is a description of book 2.",
-                    AuthorId = 1,
-                    Author = new Author()
-                    {
-                        Id = 1,
-                        Name = "J.R.R. Tolkien",
-                    }
-                },
-                new()
-                {
-                    Id = 2,
-                    Name = "Harry Potter and the Sorcerer's Stone",
-                    Description = "This is a description of book 2.",
-                    AuthorId = 2,
-                    Author = new Author()
-                    {
-                        Id = 2,
-                        Name = "J.K. Rowling",
-                    }
-                },
-                new()
-                {
-                    Id = 3,
-                    Name = "Pride and Prejudice",
-                    Description = "This is a description of book 3.",
-                    AuthorId = 3,
-                    Author = new Author()
-                    {
-                        Id = 3,
-                        Name = "Jane Austen",
-                    }
-                }
-            };
+            _dbContext = dbContext;
         }
 
         /// <inheritdoc/>
         public Task<List<Book>> GetAllBooks()
         {
-            return Task.FromResult(_books);
+            return _dbContext.Books.ToListAsync();
         }
 
         /// <inheritdoc/>
-        public Task<Book> GetBook(int id)
+        public Task<Book?> GetBook(int id, CancellationToken cancellationToken = default)
         {
-            var book = _books.Find(b => b.Id == id) 
-                ?? new Book();
-
-            return Task.FromResult(book);
+            return _dbContext.Books.FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
         }
     }
 }

@@ -1,12 +1,12 @@
 using CA_Microservices_DotNet.API.HealthCheck;
 using CA_Microservices_DotNet.Application.Services;
+using CA_Microservices_DotNet.Domain.Entities;
 using CA_Microservices_DotNet.Domain.Interfaces.Repositories;
 using CA_Microservices_DotNet.Domain.Interfaces.Services;
 using CA_Microservices_DotNet.Infrastructure;
 using CA_Microservices_DotNet.Infrastructure.Repositories;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -27,7 +27,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
-//builder.Services.AddHealthChecks();
+builder.Services.AddMemoryCache();
+
+//Register custom health check
 builder.Services.AddHealthChecks()
     .AddCheck<SampleHealthCheck>("Sample");
 
@@ -47,19 +49,16 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+//Add the custom default Identity user and set the DBContext for Identity Framework.
+builder.Services.AddDefaultIdentity<User>()
     .AddEntityFrameworkStores<MyDbContext>();
 
 var app = builder.Build();
-
-//NET 8 mapping of Identity tables
-app.MapIdentityApi<IdentityUser>();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
-
 
 if (app.Environment.IsDevelopment())
 {

@@ -9,7 +9,7 @@ namespace CA_Microservices_DotNet.Domain.Interfaces.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<Book> GetBook(int id);
+        Task<Book?> GetBook(int id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the Books.

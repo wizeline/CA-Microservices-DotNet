@@ -9,12 +9,12 @@ namespace CA_Microservices_DotNet.Domain.Interfaces.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<Book> GetBook(int id);
+        Task<Book?> GetBook(int id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the Books.
         /// </summary>
         /// <returns></returns>
-        Task<List<Book>> GetAllBooks();
+        Task<List<Book>> GetAllBooks(CancellationToken cancellationToken = default);
     }
 }

@@ -32,7 +32,7 @@ namespace CA_Microservices_DotNet.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<User>> Get(string id)
         {
             var response = await _userService.GetUser(id);
             return Ok(response);

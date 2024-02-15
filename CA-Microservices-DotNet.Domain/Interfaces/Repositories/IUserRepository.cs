@@ -14,7 +14,7 @@ namespace CA_Microservices_DotNet.Domain.Interfaces.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<User> GetUser(int id);
+        Task<User?> GetUser(string id);
 
         /// <summary>
         /// Gets all the Users.

@@ -23,7 +23,7 @@ namespace CA_Microservices_DotNet.Application.Services
             return await _userRepository.GetAllUsers();
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<User> GetUser(string id)
         {
             return await _userRepository.GetUser(id);
         }
