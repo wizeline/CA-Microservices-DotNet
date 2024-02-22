@@ -11,12 +11,12 @@ public class Review
 
     public string? Description { get; set; }
 
-    public int BookId { get; set; }
+    public int BookId { get; set; } = default!;
     public Book Book { get; set; } = default!;
 
     /// <summary>
     /// Owner of the Review
     /// </summary>
-    public string UserId { get; set; }
-    public User User { get; set; }
+    public string UserId { get; set; } = default!;
+    public User User { get; set; } = default!;
 }

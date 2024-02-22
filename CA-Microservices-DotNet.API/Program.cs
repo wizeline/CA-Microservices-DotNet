@@ -1,6 +1,7 @@
 using CA_Microservices_DotNet.API.HealthCheck;
 using CA_Microservices_DotNet.Application.Services;
 using CA_Microservices_DotNet.Domain.Entities;
+using CA_Microservices_DotNet.Domain.Interfaces;
 using CA_Microservices_DotNet.Domain.Interfaces.Repositories;
 using CA_Microservices_DotNet.Domain.Interfaces.Services;
 using CA_Microservices_DotNet.Infrastructure;
@@ -14,9 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //Add DBContext where the Identity tables are going to be created.
 var conString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -47,13 +50,18 @@ builder.Services.AddSwaggerGen(options =>
 
 });
 
-builder.Services.AddAuthorization();
+builder.Services
+    .AddAuthorization();
 
 //Add the custom default Identity user and set the DBContext for Identity Framework.
-builder.Services.AddDefaultIdentity<User>()
+builder.Services
+    .AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<MyDbContext>();
 
 var app = builder.Build();
+
+//Maps the Identity Framework endpoints to the default identity 
+app.MapIdentityApi<User>();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {

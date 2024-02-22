@@ -1,4 +1,5 @@
-﻿namespace CA_Microservices_DotNet.API.ViewModels;
+﻿
+namespace CA_Microservices_DotNet.Common.Models;
 
 public class LoginModel
 {

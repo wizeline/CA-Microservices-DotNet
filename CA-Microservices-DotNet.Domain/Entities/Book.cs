@@ -10,4 +10,5 @@ public class Book
 
     public string Author { get; set; } = "";
 
+    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 }

@@ -14,6 +14,22 @@ namespace CA_Microservices_DotNet.Infrastructure
         {
             builder.Entity<User>(entity => entity.ToTable("AppUsers"));
 
+            builder.Entity<User>()
+                .Property(u => u.FirstName)
+                .HasDefaultValue("");
+            
+            builder.Entity<User>()
+                .Property(u => u.LastName)
+                .HasDefaultValue("");
+
+            builder.Entity<User>()
+                .Property(u => u.SecondLastName)
+                .HasDefaultValue("");
+
+            builder.Entity<User>()
+                .Property(u => u.Phone)
+                .HasDefaultValue("");
+
             builder.Entity<Book>()
                 .HasData(new List<Book>()
                 {
