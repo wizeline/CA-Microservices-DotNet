@@ -1,47 +1,29 @@
-﻿using CA_Microservices_DotNet.Domain.Interfaces.Services;
-using Microsoft.Data.SqlClient;
+﻿using CA_Microservices_DotNet.Infrastructure;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace CA_Microservices_DotNet.API.HealthCheck
+namespace CA_Microservices_DotNet.API.HealthCheck;
+
+public class SampleHealthCheck : IHealthCheck
 {
-    public class SampleHealthCheck : IHealthCheck
+    private readonly MyDbContext _dbContext;
+
+    public SampleHealthCheck(MyDbContext dbContext)
     {
-        private readonly IConfiguration _config;
+        _dbContext = dbContext;
+    }
 
-        public SampleHealthCheck(IConfiguration config)
+    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+    {
+        bool isHealthy = _dbContext.Database.CanConnect();
+
+        if (isHealthy)
         {
-            _config = config;
-        }
-
-        public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
-        {
-            var isHealthy = true;
-
-            try
-            {
-                var connectionString = _config["ConnectionStrings:DefaultConnection"];
-                using var connection = new SqlConnection(connectionString);
-                await connection.OpenAsync(cancellationToken);
-                using (SqlCommand command = connection.CreateCommand())
-                {
-                    command.CommandText = "SELECT 1;";
-                    await command.ExecuteScalarAsync(cancellationToken);
-                }
-            }
-            catch
-            {
-                isHealthy = false;
-            }
-
-            if (isHealthy)
-            {
-                return await Task.FromResult(
-                    HealthCheckResult.Healthy("A healthy result."));
-            }
-
             return await Task.FromResult(
-                new HealthCheckResult(
-                    context.Registration.FailureStatus, "An unhealthy result."));
+                HealthCheckResult.Healthy("Microservice is healthy."));
         }
+
+        return await Task.FromResult(
+            new HealthCheckResult(
+                context.Registration.FailureStatus, "Microservice is unhealthy."));
     }
 }

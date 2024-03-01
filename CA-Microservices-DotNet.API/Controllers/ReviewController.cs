@@ -12,6 +12,9 @@ namespace CA_Microservices_DotNet.API.Controllers;
 public class ReviewController : ControllerBase
 {
     private IReviewService _reviewService;
+    //TODO: Add Login to All services
+    //TODO: Add exception handling
+    //TODO: Add integration test project
 
     public ReviewController(IReviewService reviewService)
     {
@@ -27,9 +30,16 @@ public class ReviewController : ControllerBase
 
             await _reviewService.AddReview(reviewModel, userId, cancellationToken);
 
-            return Ok(ModelState);
+            return Created();
         }
 
         return BadRequest(ModelState.ValidationState);
+    }
+
+    [HttpGet("{bookId:int}")]
+    public async Task<IActionResult> GetReviews(int bookId, CancellationToken cancellationToken)
+    {
+        var reviews = await _reviewService.GetReviews(bookId, cancellationToken);
+        return Ok(reviews);
     }
 }
