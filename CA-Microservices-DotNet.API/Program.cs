@@ -18,10 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the IoC.
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//Register GenericRepository of any type is required/requested.
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 //Add DBContext where the Identity tables are going to be created.

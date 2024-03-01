@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CA_Microservices_DotNet.Infrastructure.Repositories;
 
-namespace CA_Microservices_DotNet.Infrastructure.Repositories
+internal class ReviewRepository
 {
-    internal class ReviewRepository
-    {
-    }
 }
