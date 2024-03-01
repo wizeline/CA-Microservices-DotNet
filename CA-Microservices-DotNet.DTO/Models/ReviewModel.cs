@@ -2,7 +2,7 @@
 
 public class ReviewModel
 {
-    public required string? Description { get; set; }
+    public required string Description { get; set; }
 
     public required double Stars { get; set; }
 

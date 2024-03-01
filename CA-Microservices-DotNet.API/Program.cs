@@ -9,27 +9,45 @@ using CA_Microservices_DotNet.Infrastructure.Repositories;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the IoC.
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//Register GenericRepository of any type is required/requested.
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 //Add DBContext where the Identity tables are going to be created.
 var conString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(conString));
 
+// Configure Logging with Serilog
+builder.Host.UseSerilog((context, config) =>
+    config.WriteTo.Console()
+    .ReadFrom.Configuration(context.Configuration)
+    .WriteTo.MSSqlServer(conString, 
+        sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions() 
+        { 
+            TableName = "Logs",
+            AutoCreateSqlTable = true
+        })
+    );
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
+//Add AutoMapper to IoC and find Profiles in the current solution
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Register IMemoryCache for D.I.
 builder.Services.AddMemoryCache();
 
 //Register custom health check
@@ -63,9 +81,17 @@ var app = builder.Build();
 //Maps the Identity Framework endpoints to the default identity 
 app.MapIdentityApi<User>();
 
+//Configures behavior of custom health check
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+    ResultStatusCodes = new Dictionary<HealthStatus, int>()
+    {
+        { HealthStatus.Healthy, 200 },
+        { HealthStatus.Unhealthy, 500 },
+        { HealthStatus.Degraded, 200 }
+    },
+    AllowCachingResponses = false
 });
 
 if (app.Environment.IsDevelopment())
