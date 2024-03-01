@@ -2,8 +2,15 @@
 
 namespace CA_Microservices_DotNet.Domain.Interfaces;
 
+/// <summary>
+/// Use UnitOfWork for commands like Add, Remove, Update to perform SOLID transactions
+/// call SaveChanges() only if everything went well in the workflow.
+/// </summary>
 public interface IUnitOfWork
 {
+    /// <summary>
+    /// Expose IQueryable to access table data. 
+    /// </summary>
     IQueryable<Review> Reviews { get; }
     IQueryable<Book> Books { get; }
 

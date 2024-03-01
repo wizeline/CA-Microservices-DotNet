@@ -6,5 +6,5 @@ public class ReviewModel
 
     public required double Stars { get; set; }
 
-    public int BookId { get; set; }
+    public required int BookId { get; set; }
 }

@@ -50,7 +50,7 @@ public class ReviewService : IReviewService
             return _mapper.Map<List<ReviewModel>>(cachedReviews);
         }
 
-        var reviews = await _reviewRepository.Get(x => x.BookId == bookId, cancellationToken: cancellationToken);
+        var reviews = await _reviewRepository.Get(r => r.BookId == bookId, cancellationToken: cancellationToken);
         _memoryCache.Set(cacheKey, reviews);
 
         return _mapper.Map<List<ReviewModel>>(reviews);
@@ -61,5 +61,13 @@ public class ReviewService : IReviewService
     {
         var review = await _reviewRepository.GetById(reviewId, cancellationToken: cancellationToken);
         return _mapper.Map<ReviewModel>(review);
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<ReviewModel>> GetMyReviews(string userId, CancellationToken cancellationToken = default)
+    {
+        var myReviews = await _reviewRepository.Get(r => r.UserId == userId, cancellationToken: cancellationToken);
+
+        return _mapper.Map<List<ReviewModel>>(myReviews);
     }
 }

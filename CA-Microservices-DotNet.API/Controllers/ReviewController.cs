@@ -11,14 +11,13 @@ namespace CA_Microservices_DotNet.API.Controllers;
 [Authorize]
 public class ReviewController : ControllerBase
 {
-    private IReviewService _reviewService;
-    //TODO: Add Login to All services
-    //TODO: Add exception handling
-    //TODO: Add integration test project
+    private readonly IReviewService _reviewService;
+    private readonly ILogger<ReviewController> _logger;
 
-    public ReviewController(IReviewService reviewService)
+    public ReviewController(IReviewService reviewService, ILogger<ReviewController> logger)
     {
         _reviewService = reviewService;
+        _logger = logger;
     }
 
     [HttpPost]
@@ -27,10 +26,15 @@ public class ReviewController : ControllerBase
         if(ModelState.IsValid)
         {
             var userId = User.GetUserId();
+            if (userId is null)
+            {
+                _logger.LogError("Unable to find userId in the request");
+                return BadRequest("UserId not found");
+            }
 
             await _reviewService.AddReview(reviewModel, userId, cancellationToken);
 
-            return Created();
+            return Ok();
         }
 
         return BadRequest(ModelState.ValidationState);
@@ -40,6 +44,20 @@ public class ReviewController : ControllerBase
     public async Task<IActionResult> GetReviews(int bookId, CancellationToken cancellationToken)
     {
         var reviews = await _reviewService.GetReviews(bookId, cancellationToken);
+        return Ok(reviews);
+    }
+
+    [HttpGet("mine")]
+    public async Task<ActionResult<List<ReviewModel>>> GetMyReviews(CancellationToken cancellationToken)
+    {
+        var userId = User.GetUserId();
+        if(userId is null)
+        {
+            _logger.LogError("Unable to find userId in the request");
+            return BadRequest("UserId not found");
+        }
+
+        var reviews = await _reviewService.GetMyReviews(userId, cancellationToken);
         return Ok(reviews);
     }
 }
