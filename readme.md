@@ -16,25 +16,40 @@ This project is a template for developers who are working on a project using mic
 
 ### Content
 
-- Clean architecture: The project follows the principles of clean architecture, such as separation of concerns, dependency inversion, and use of abstractions. The project is organized into four layers: presentation, application, domain, and infrastructure. Each layer has its own responsibilities and dependencies, which are clearly defined and isolated.
+- Clean architecture: The project follows the principles of clean architecture, such as separation of concerns, dependency injection, and use of abstractions. The project is organized into four layers: presentation, application, domain, and infrastructure. Each layer has its own responsibilities and dependencies, which are clearly defined and isolated.
 - Docker support: The project is designed to run on Docker containers, which provide a consistent and portable environment for deployment. The project includes a Dockerfile and a docker-compose file to build and run the microservice with all the required dependencies.
 
 - Swagger: The project uses Swagger to document and test the API endpoints of the microservice. The project uses the Swashbuckle.AspNetCore library to generate and serve the Swagger UI and the OpenAPI specification.
 
 # Git
-- Source control: [Trunk Based](https://trunkbaseddevelopment.com/)
+- Source control: [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) 
 - [Commit conventions](https://www.conventionalcommits.org/en/v1.0.0/#specification)
 
 ### Architecture
+This microservice follows a hexagonal architecture, also known as clean architecture. This architectural style promotes separation of concerns, loose coupling, and testability. Here's a breakdown of the key components:
 
+**Presentation Layer:** This layer handles user interactions and formatting of data for display. It interacts with the application layer but remains independent of the specific technology used (e.g., web API, console application).
+
+**Application Layer:** This layer implements the core business logic of the microservice. It interacts with the domain layer and doesn't rely on any external framework or technology.
+
+**Domain Layer:** This layer represents the core business concepts and rules of the application. It's independent of any infrastructure or technology.
+
+**Infrastructure Layer:** This layer provides the implementation details for persistence, messaging, and other technical concerns. It depends on the chosen technology stack (e.g., database, message broker).
+This layered approach offers several benefits:
+
+**Docker:** The project utilizes Docker containers for packaging and deployment, ensuring a consistent and portable environment.
+
+**Swagger:** The project leverages Swagger for API documentation and testing, enhancing development experience and easier integration with other applications.
 
 
 ### Requirements
 
+- Visual Studio 2022 or higher.
 - .NET 8 SDK (https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - Docker Desktop (https://www.docker.com/)
+- Database Explorer of your preference.
 
-## SetUp
+## Setup
 
 ### Install
 1. Install the requirements.
@@ -46,6 +61,15 @@ This project is a template for developers who are working on a project using mic
 
 #### Run
 
+Option 1:
+1. Open the project using Visual Studio.
+2. In the solution explorer,  right click on the docker-compose project
+3. Select *"Set as startup project"*
+4. Build the project.
+5. Run the project or press F5.
+
+
+Option 2: 
 1. In a command prompt navigate to the root folder of the project and run the command 
 ```zsh
 docker-compose up -d
