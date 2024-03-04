@@ -28,14 +28,13 @@ This project is a template for developers who are working on a project using mic
 ### Architecture
 This microservice follows a hexagonal architecture, also known as clean architecture. This architectural style promotes separation of concerns, loose coupling, and testability. Here's a breakdown of the key components:
 
-**Presentation Layer:** This layer handles user interactions and formatting of data for display. It interacts with the application layer but remains independent of the specific technology used (e.g., web API, console application).
+**Presentation Layer:** This layer handles user interactions and formatting of data for display. It interacts with the application layer but remains independent of the specific technology or logic used.
 
-**Application Layer:** This layer implements the core business logic of the microservice. It interacts with the domain layer and doesn't rely on any external framework or technology.
+**Application Layer:** This layer implements the core business logic of the microservice. It interacts with the infraestructure layer but is independent of the technology or framework used.
 
 **Domain Layer:** This layer represents the core business concepts and rules of the application. It's independent of any infrastructure or technology.
 
-**Infrastructure Layer:** This layer provides the implementation details for persistence, messaging, and other technical concerns. It depends on the chosen technology stack (e.g., database, message broker).
-This layered approach offers several benefits:
+**Infrastructure Layer:** This layer provides the implementation details for persistence and other technical concerns. It depends on the chosen technology stack (e.g., database).
 
 **Docker:** The project utilizes Docker containers for packaging and deployment, ensuring a consistent and portable environment.
 
@@ -63,10 +62,9 @@ This layered approach offers several benefits:
 
 Option 1:
 1. Open the project using Visual Studio.
-2. In the solution explorer,  right click on the docker-compose project
-3. Select *"Set as startup project"*
-4. Build the project.
-5. Run the project or press F5.
+2. In the solution explorer,  right click on the docker-compose project and select *"Set as startup project"*
+3. Build the project.
+4. Run the project or press F5.
 
 
 Option 2: 
