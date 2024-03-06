@@ -72,6 +72,24 @@ namespace CA_Microservices_DotNet.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Level = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MessageTemplate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeStamp = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Exception = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Properties = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -117,8 +135,8 @@ namespace CA_Microservices_DotNet.Infrastructure.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -162,8 +180,8 @@ namespace CA_Microservices_DotNet.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -213,7 +231,19 @@ namespace CA_Microservices_DotNet.Infrastructure.Migrations
                 {
                     { 1, "J.R.R. Tolkien", "This is a description of book 2.", "The Lord of the Rings" },
                     { 2, "J.K. Rowling", "This is a description of book 2.", "Harry Potter and the Sorcerer's Stone" },
-                    { 3, "Jane Austen", "This is a description of book 3.", "Pride and Prejudice" }
+                    { 3, "Jane Austen", "This is a description of book 3.", "Pride and Prejudice" },
+                    { 4, "Harper Lee", "A timeless story about racial prejudice in the Deep South", "To Kill a Mockingbird" },
+                    { 5, "Douglas Adams", "A comic science fiction series by Douglas Adams", "The Hitchhiker's Guide to the Galaxy" },
+                    { 6, "Gabriel García Márquez", "An epic novel of the Buendía family and their rise and fall", "One Hundred Years of Solitude" },
+                    { 7, "F. Scott Fitzgerald", "A novel about the Jazz Age and the American Dream", "The Great Gatsby" },
+                    { 8, "Mary Shelley", "A gothic novel about the consequences of scientific ambition", "Frankenstein" },
+                    { 9, "George Orwell", "A dystopian novel about a totalitarian state", "1984" },
+                    { 10, "J. D. Salinger", "A novel about a young man's alienation from society", "The Catcher in the Rye" },
+                    { 11, "Arundhati Roy", "A novel about forbidden love and family secrets", "The God of Small Things" },
+                    { 12, "Ralph Ellison", "A novel about an African-American man's search for identity", "Invisible Man" },
+                    { 13, "Toni Morrison", "A novel about the psychological and emotional effects of slavery", "Beloved" },
+                    { 14, "Chinua Achebe", "A novel about the clash of cultures between traditional and colonial societies", "Things Fall Apart" },
+                    { 15, "Markus Zusak", "A novel set in Nazi Germany about a young girl who steals books", "The Book Thief" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -283,6 +313,9 @@ namespace CA_Microservices_DotNet.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Logs");
 
             migrationBuilder.DropTable(
                 name: "Reviews");

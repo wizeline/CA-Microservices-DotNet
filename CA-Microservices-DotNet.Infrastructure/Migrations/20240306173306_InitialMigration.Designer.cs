@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CA_Microservices_DotNet.Infrastructure.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240222225221_InitialMigration")]
+    [Migration("20240306173306_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -70,7 +70,124 @@ namespace CA_Microservices_DotNet.Infrastructure.Migrations
                             Author = "Jane Austen",
                             Description = "This is a description of book 3.",
                             Name = "Pride and Prejudice"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Author = "Harper Lee",
+                            Description = "A timeless story about racial prejudice in the Deep South",
+                            Name = "To Kill a Mockingbird"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Author = "Douglas Adams",
+                            Description = "A comic science fiction series by Douglas Adams",
+                            Name = "The Hitchhiker's Guide to the Galaxy"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Author = "Gabriel García Márquez",
+                            Description = "An epic novel of the Buendía family and their rise and fall",
+                            Name = "One Hundred Years of Solitude"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Author = "F. Scott Fitzgerald",
+                            Description = "A novel about the Jazz Age and the American Dream",
+                            Name = "The Great Gatsby"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Author = "Mary Shelley",
+                            Description = "A gothic novel about the consequences of scientific ambition",
+                            Name = "Frankenstein"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Author = "George Orwell",
+                            Description = "A dystopian novel about a totalitarian state",
+                            Name = "1984"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Author = "J. D. Salinger",
+                            Description = "A novel about a young man's alienation from society",
+                            Name = "The Catcher in the Rye"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Author = "Arundhati Roy",
+                            Description = "A novel about forbidden love and family secrets",
+                            Name = "The God of Small Things"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Author = "Ralph Ellison",
+                            Description = "A novel about an African-American man's search for identity",
+                            Name = "Invisible Man"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Author = "Toni Morrison",
+                            Description = "A novel about the psychological and emotional effects of slavery",
+                            Name = "Beloved"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Author = "Chinua Achebe",
+                            Description = "A novel about the clash of cultures between traditional and colonial societies",
+                            Name = "Things Fall Apart"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Author = "Markus Zusak",
+                            Description = "A novel set in Nazi Germany about a young girl who steals books",
+                            Name = "The Book Thief"
                         });
+                });
+
+            modelBuilder.Entity("CA_Microservices_DotNet.Domain.Entities.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Exception")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MessageTemplate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Properties")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("TimeStamp")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("CA_Microservices_DotNet.Domain.Entities.Review", b =>
@@ -275,12 +392,10 @@ namespace CA_Microservices_DotNet.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -317,12 +432,10 @@ namespace CA_Microservices_DotNet.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");

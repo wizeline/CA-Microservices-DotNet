@@ -23,7 +23,51 @@ public class ReviewController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddReview(ReviewModel reviewModel, CancellationToken cancellationToken)
     {
-        if(ModelState.IsValid)
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.GetUserId();
+                if (userId is null)
+                {
+                    _logger.LogError("Unable to find userId in the request");
+                    return BadRequest("UserId not found");
+                }
+
+                await _reviewService.AddReview(reviewModel, userId, cancellationToken);
+
+                return Ok();
+            }
+
+            return BadRequest(ModelState.ValidationState);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("There was an error: {message}, {exception}", ex.Message, ex);
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        }
+       
+    }
+
+    [HttpGet("{bookId:int}")]
+    public async Task<IActionResult> GetReviews(int bookId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var reviews = await _reviewService.GetReviews(bookId, cancellationToken);
+            return Ok(reviews);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("There was an error: {message}, {exception}", ex.Message, ex);
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpGet("mine")]
+    public async Task<ActionResult<List<ReviewModel>>> GetMyReviews(CancellationToken cancellationToken)
+    {
+        try
         {
             var userId = User.GetUserId();
             if (userId is null)
@@ -32,32 +76,13 @@ public class ReviewController : ControllerBase
                 return BadRequest("UserId not found");
             }
 
-            await _reviewService.AddReview(reviewModel, userId, cancellationToken);
-
-            return Ok();
+            var reviews = await _reviewService.GetMyReviews(userId, cancellationToken);
+            return Ok(reviews);
         }
-
-        return BadRequest(ModelState.ValidationState);
-    }
-
-    [HttpGet("{bookId:int}")]
-    public async Task<IActionResult> GetReviews(int bookId, CancellationToken cancellationToken)
-    {
-        var reviews = await _reviewService.GetReviews(bookId, cancellationToken);
-        return Ok(reviews);
-    }
-
-    [HttpGet("mine")]
-    public async Task<ActionResult<List<ReviewModel>>> GetMyReviews(CancellationToken cancellationToken)
-    {
-        var userId = User.GetUserId();
-        if(userId is null)
+        catch (Exception ex)
         {
-            _logger.LogError("Unable to find userId in the request");
-            return BadRequest("UserId not found");
+            _logger.LogError("There was an error: {message}, {exception}", ex.Message, ex);
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
         }
-
-        var reviews = await _reviewService.GetMyReviews(userId, cancellationToken);
-        return Ok(reviews);
     }
 }

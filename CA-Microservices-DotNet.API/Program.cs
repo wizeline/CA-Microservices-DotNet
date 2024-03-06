@@ -24,21 +24,19 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 //Add DBContext where the Identity tables are going to be created.
-var conString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("ca-microservices-sql-db");
 builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(conString));
+    options.UseSqlServer(connectionString));
 
 // Configure Logging with Serilog
 builder.Host.UseSerilog((context, config) =>
     config.WriteTo.Console()
     .ReadFrom.Configuration(context.Configuration)
-    .WriteTo.MSSqlServer(conString, 
-        sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions() 
-        { 
+    .WriteTo.MSSqlServer(connectionString,
+        sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions()
+        {
             TableName = "Logs",
-            AutoCreateSqlTable = true
-        })
-    );
+        }));
 
 builder.Services.AddControllers();
 
@@ -65,11 +63,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
-
 });
 
-builder.Services
-    .AddAuthorization();
+builder.Services.AddAuthorization();
 
 //Add the custom default Identity user and set the DBContext for Identity Framework.
 builder.Services

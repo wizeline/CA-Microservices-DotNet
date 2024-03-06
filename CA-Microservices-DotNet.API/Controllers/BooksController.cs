@@ -22,11 +22,19 @@ public class BooksController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<BookModel>>> Get(CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Request to BookController");
-        var response = await _bookService.GetAllBooks(cancellationToken);
+        try
+        {
+            _logger.LogInformation("Request to BookController");
+            var response = await _bookService.GetAllBooks(cancellationToken);
 
-        _logger.LogInformation("Found books: {books}", response); 
-        
-        return Ok(response);
+            _logger.LogInformation("Found books: {books}", response);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("There was an error: {message}, {exception}", ex.Message, ex);
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        }
     }
 }

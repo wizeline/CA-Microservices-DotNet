@@ -1,6 +1,7 @@
 ﻿using CA_Microservices_DotNet.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace CA_Microservices_DotNet.Infrastructure;
 
@@ -9,6 +10,7 @@ public class MyDbContext(DbContextOptions<MyDbContext> options) : IdentityDbCont
     public DbSet<User> AppUsers { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<Review> Reviews { get; set; }
+    public DbSet<Log> Logs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -54,6 +56,30 @@ public class MyDbContext(DbContextOptions<MyDbContext> options) : IdentityDbCont
             .HasMany(b => b.Reviews)
             .WithOne(b => b.Book)
             .HasForeignKey(b => b.BookId);
+
+        builder.Entity<Log>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Level)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.Message)
+                .IsRequired(false);
+
+            entity.Property(e => e.MessageTemplate)
+                .IsRequired(false);
+
+            entity.Property(e => e.TimeStamp)
+                .IsRequired();
+
+            entity.Property(e => e.Exception)
+                .IsRequired(false);
+
+            entity.Property(e => e.Properties)
+                .IsRequired(false);
+        });
 
         base.OnModelCreating(builder);
     }

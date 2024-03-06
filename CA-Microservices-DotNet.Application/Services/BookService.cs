@@ -16,7 +16,7 @@ public class BookService : IBookService
 
     private readonly IMemoryCache _cache;
     private readonly MemoryCacheEntryOptions cacheOptions = new MemoryCacheEntryOptions()
-            .SetAbsoluteExpiration(TimeSpan.FromMinutes(2));
+            .SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
     private const string cacheKey = $"Collection.{nameof(Book)}";
 
     public BookService(IMemoryCache cache, 
@@ -39,7 +39,7 @@ public class BookService : IBookService
         }
 
         var books = await _genericRepo.Get(includeProperties: ["Reviews"], cancellationToken: cancellationToken);
-        _cache.Set(cacheKey, books);
+        _cache.Set(cacheKey, books, cacheOptions);
 
         return _mapper.Map<List<BookModel>>(books);
     }
