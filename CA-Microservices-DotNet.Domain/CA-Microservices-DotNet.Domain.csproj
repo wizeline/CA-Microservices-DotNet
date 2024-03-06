@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CA-Microservices-DotNet.DTO\CA-Microservices-DotNet.Common.csproj" />
+    <ProjectReference Include="..\CA-Microservices-DotNet.Common\CA-Microservices-DotNet.Common.csproj" />
   </ItemGroup>
 
 </Project>
