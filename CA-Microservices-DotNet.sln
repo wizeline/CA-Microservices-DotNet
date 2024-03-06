@@ -5,11 +5,15 @@ VisualStudioVersion = 17.9.34310.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CA-Microservices-DotNet.API", "CA-Microservices-DotNet.API\CA-Microservices-DotNet.API.csproj", "{8365BA83-04B3-4977-A4A7-E971315D0C71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CA-Microservices-DotNet.Domain", "CA-Microservices-DotNet.Domain\CA-Microservices-DotNet.Domain.csproj", "{7CDF25CF-AE4D-4812-8396-72601C85ACB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CA-Microservices-DotNet.Domain", "CA-Microservices-DotNet.Domain\CA-Microservices-DotNet.Domain.csproj", "{7CDF25CF-AE4D-4812-8396-72601C85ACB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CA-Microservices-DotNet.Infrastructure", "CA-Microservices-DotNet.Infrastructure\CA-Microservices-DotNet.Infrastructure.csproj", "{70290FFF-17EA-493F-968F-E18EACF93D74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CA-Microservices-DotNet.Infrastructure", "CA-Microservices-DotNet.Infrastructure\CA-Microservices-DotNet.Infrastructure.csproj", "{70290FFF-17EA-493F-968F-E18EACF93D74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CA-Microservices-DotNet.Application", "CA-Microservices-DotNet.Application\CA-Microservices-DotNet.Application.csproj", "{20BD9BB2-6F8B-4AF4-ABC0-1A0F366917A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CA-Microservices-DotNet.Application", "CA-Microservices-DotNet.Application\CA-Microservices-DotNet.Application.csproj", "{20BD9BB2-6F8B-4AF4-ABC0-1A0F366917A1}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{319D9E29-2EFC-43AE-883D-BB24313E6118}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CA-Microservices-DotNet.Common", "CA-Microservices-DotNet.DTO\CA-Microservices-DotNet.Common.csproj", "{E2049F0A-306E-4F38-B804-9A52A6CEC79D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{20BD9BB2-6F8B-4AF4-ABC0-1A0F366917A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20BD9BB2-6F8B-4AF4-ABC0-1A0F366917A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20BD9BB2-6F8B-4AF4-ABC0-1A0F366917A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{319D9E29-2EFC-43AE-883D-BB24313E6118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{319D9E29-2EFC-43AE-883D-BB24313E6118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{319D9E29-2EFC-43AE-883D-BB24313E6118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{319D9E29-2EFC-43AE-883D-BB24313E6118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2049F0A-306E-4F38-B804-9A52A6CEC79D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2049F0A-306E-4F38-B804-9A52A6CEC79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2049F0A-306E-4F38-B804-9A52A6CEC79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2049F0A-306E-4F38-B804-9A52A6CEC79D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
