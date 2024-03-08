@@ -14,17 +14,6 @@ This project is a template for developers who are working on a project using mic
 
 ## Specification
 
-### Content
-
-- Clean architecture: The project follows the principles of clean architecture, such as separation of concerns, dependency injection, and use of abstractions. The project is organized into four layers: presentation, application, domain, and infrastructure. Each layer has its own responsibilities and dependencies, which are clearly defined and isolated.
-- Docker support: The project is designed to run on Docker containers, which provide a consistent and portable environment for deployment. The project includes a Dockerfile and a docker-compose file to build and run the microservice with all the required dependencies.
-
-- Swagger: The project uses Swagger to document and test the API endpoints of the microservice. The project uses the Swashbuckle.AspNetCore library to generate and serve the Swagger UI and the OpenAPI specification.
-
-# Git
-- Source control: [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) 
-- [Commit conventions](https://www.conventionalcommits.org/en/v1.0.0/#specification)
-
 ### Architecture
 This microservice follows a hexagonal architecture, also known as clean architecture. This architectural style promotes separation of concerns, loose coupling, and testability. Here's a breakdown of the key components:
 
@@ -39,6 +28,54 @@ This microservice follows a hexagonal architecture, also known as clean architec
 **Docker:** The project utilizes Docker containers for packaging and deployment, ensuring a consistent and portable environment.
 
 **Swagger:** The project leverages Swagger for API documentation and testing, enhancing development experience and easier integration with other applications.
+
+## Cross-Cutting Concerns in a .NET Microservice
+
+**What are Cross-Cutting Concerns?**
+
+Cross-cutting concerns are functionalities that apply horizontally across an entire application, rather than being specific to any particular business logic. They are essential aspects that cut through various layers of the application and need to be implemented consistently. This document outlines some essential cross-cutting concerns typically implemented in a .NET microservice architecture.
+
+**1. Authentication and Authorization:**
+
+* **Purpose:** Validate user identity and control access to resources based on permissions.
+* **Implementation:**
+    * This microservice utilizes **Identity Server** for centralized authentication and authorization using Bearer Token authentication.
+    * Within the application itself, **Identity Framework 8** is used to manage user claims and authorization checks.
+
+**2. Caching:**
+
+* **Purpose:** Improve performance by storing frequently accessed data in memory for faster retrieval.
+* **Implementation:**
+    * This project leverages the built-in **IMemoryCache** service provided by ASP.NET Core.
+* **Considerations:**
+    * Define appropriate cache invalidation strategies to ensure data consistency.
+    * Set cache expiration times to manage stale data and optimize cache utilization.
+
+**3. Logging:**
+
+* **Purpose:** Record application events and errors for monitoring and debugging.
+* **Implementation:**
+    * This project utilizes **Serilog** for structured logging, configured to write logs to a **Microsoft SQL Server (MSSQL)** database.
+* **Considerations:**
+    * Define different logging levels (e.g., Information, Warning, Error) for granular logging.
+    * Configure log sinks to send logs to appropriate destinations (e.g., console, file, SIEM).
+
+**4. Health Checks:**
+
+* **Purpose:** Verify the overall health and readiness of the microservice.
+* **Implementation:**
+    * The API layer includes a custom health check named `SampleHealthcheck`. This check verifies the overall health of the service and additionally includes a specific check to ensure the **database connection is alive**.
+    * ASP.NET Core built-in health checks can also be implemented for exposing additional service health endpoints.
+* **Considerations:**
+    * Define health checks that reflect critical functionalities of your microservice.
+    * Configure health checks to be easily accessible by monitoring tools.
+
+**5. Database Connection:**
+
+* **Purpose:** Establish and manage connections to the database for data persistence.
+* **Implementation:**
+    * This project utilizes **Entity Framework Core 8 (EF Core 8)** for object-relational mapping (ORM) and database access. 
+    * Database configurations are defined using **Fluent API** within the **Persistence Layer**. Fluent API provides a code-based way to configure entity mappings and relationships.
 
 
 ### Requirements
