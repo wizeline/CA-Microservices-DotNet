@@ -1,0 +1,10 @@
+{
+  "ConnectionStrings": {
+    "localhost": "Server=localhost,1433;Database=CA-Microservices-DotNet;User Id=sa;Password=Password01!;TrustServerCertificate=True;",
+    "ca-microservices-sql-db": "Server=ca-microservices-sql-db;Database=CA-Microservices-DotNet;User Id=sa;Password=Password01!;TrustServerCertificate=True;"
+  },
+  "TablesToTruncate": [
+    "Reviews",
+    "Books"
+  ]
+}
