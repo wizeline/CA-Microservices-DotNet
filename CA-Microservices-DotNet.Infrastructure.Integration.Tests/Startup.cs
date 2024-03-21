@@ -54,7 +54,7 @@ internal class Startup
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private static MyDbContext CreateDbContext()
+    internal static MyDbContext CreateDbContext()
     {
         var connectionString = GetConnectionString()
             ?? throw new Exception("ConnectionString cannot be null");
