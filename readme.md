@@ -33,14 +33,14 @@ This microservice follows a hexagonal architecture, also known as clean architec
 
 **What are Cross-Cutting Concerns?**
 
-Cross-cutting concerns are functionalities that apply horizontally across an entire application, rather than being specific to any particular business logic. They are essential aspects that cut through various layers of the application and need to be implemented consistently. This document outlines some essential cross-cutting concerns typically implemented in a .NET microservice architecture.
+Cross-cutting concerns are functionalities that apply horizontally across an entire application, rather than being specific to any particular business logic. They are essential aspects that cut through various layers of the application and need to be implemented consistently. This project outlines some essential cross-cutting concerns typically implemented in a .NET microservice architecture.
 
 **1. Authentication and Authorization:**
 
 * **Purpose:** Validate user identity and control access to resources based on permissions.
 * **Implementation:**
     * This microservice utilizes **Identity Server** for centralized authentication and authorization using Bearer Token authentication.
-    * Within the application itself, **Identity Framework 8** is used to manage user claims and authorization checks.
+    * Within the application itself, **Identity Framework 8** is used to manage user claims and authorization checks using bearer tokens with a 1h expiration time.
 
 **2. Caching:**
 
@@ -53,12 +53,12 @@ Cross-cutting concerns are functionalities that apply horizontally across an ent
 
 **3. Logging:**
 
-* **Purpose:** Record application events and errors for monitoring and debugging.
+* **Purpose:** Record application events and errors into the database for monitoring and debugging.
 * **Implementation:**
-    * This project utilizes **Serilog** for structured logging, configured to write logs to a **Microsoft SQL Server (MSSQL)** database.
+    * This project utilizes **Serilog** for structured logging, configured to write logs to a **Microsoft SQL Server (MSSQL)** database into a **Logs** table.
 * **Considerations:**
     * Define different logging levels (e.g., Information, Warning, Error) for granular logging.
-    * Configure log sinks to send logs to appropriate destinations (e.g., console, file, SIEM).
+    * Configure log sinks in program.cs or appsettings.json to send logs to appropriate destinations (e.g., console, file, etc).
 
 **4. Health Checks:**
 
@@ -68,7 +68,7 @@ Cross-cutting concerns are functionalities that apply horizontally across an ent
     * ASP.NET Core built-in health checks can also be implemented for exposing additional service health endpoints.
 * **Considerations:**
     * Define health checks that reflect critical functionalities of your microservice.
-    * Configure health checks to be easily accessible by monitoring tools.
+    * Configure health checks in ``program.cs to be easily accessible by monitoring tools.
 
 **5. Database Connection:**
 
