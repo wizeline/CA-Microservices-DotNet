@@ -4,7 +4,6 @@ using CA_Microservices_DotNet.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using CA_Microservices_DotNet.Domain.Entities;
 using CA_Microservices_DotNet.Domain.Interfaces.Repositories;
-using Microsoft.Extensions.Caching.Memory;
 using AutoMapper;
 
 namespace CA_Microservices_DotNet.Application.Services;
@@ -13,13 +12,15 @@ public class ReviewService : IReviewService
 {
     private readonly IUnitOfWork _unitOfWork;
     private IGenericRepository<Review> _reviewRepository;
-    private readonly IMemoryCache _memoryCache;
     private readonly IMapper _mapper;
+    
+    private readonly IMemoryCacheService _memoryCache;
     private const string cacheKey = $"Collection.{nameof(Review)}";
+    private static readonly TimeSpan cacheExpiration = TimeSpan.FromMinutes(1);
 
     public ReviewService(IUnitOfWork unitOfWork,
         IGenericRepository<Review> reviewRepository,
-        IMemoryCache memoryCache,
+        IMemoryCacheService memoryCache,
         IMapper mapper)
     {
         _unitOfWork = unitOfWork;
@@ -45,13 +46,21 @@ public class ReviewService : IReviewService
     /// <inheritdoc/>
     public async Task<List<ReviewModel>> GetReviews(int bookId, CancellationToken cancellationToken = default)
     {
-        if(_memoryCache.TryGetValue(bookId, out var cachedReviews))
+        //Create a specific cache key for the reviews of bookId 
+        var composedCacheKey = $"{cacheKey}.{bookId}";
+
+        //Check if value exists in cache
+        if(_memoryCache.TryGetValue<List<ReviewModel>>(composedCacheKey, out var cachedReviews))
         {
             return _mapper.Map<List<ReviewModel>>(cachedReviews);
         }
 
+        //Get from database if does not exist value in cache
         var reviews = await _reviewRepository.Get(r => r.BookId == bookId, cancellationToken: cancellationToken);
-        _memoryCache.Set(cacheKey, reviews);
+        
+        //Store value in cache for the next call 
+        if(reviews.Count > 0)
+            _ = _memoryCache.Set(composedCacheKey, reviews, cacheExpiration);
 
         return _mapper.Map<List<ReviewModel>>(reviews);
     }

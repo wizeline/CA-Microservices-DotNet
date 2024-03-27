@@ -1,12 +1,13 @@
 using CA_Microservices_DotNet.Domain.Entities;
-using CA_Microservices_DotNet.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace CA_Microservices_DotNet.Infrastructure.Integration.Tests;
 
+[TestFixture]
 internal class UnitOfWorkTests
 {
-    private IUnitOfWork _sut = default!;
+    //sut stands for System Under Test, which is the system/service we are testing.
+    private UnitOfWork _sut = default!;
 
     private static Book _book = new()
     {
@@ -21,14 +22,8 @@ internal class UnitOfWorkTests
         _sut = new UnitOfWork(Startup.CreateDbContext());
     }
 
-    [OneTimeTearDown]
-    public void OneTimeTearDown()
-    {
-        
-    }
-
     [Test, Order(1)]
-    public async Task Add_Should_Create_A_Database_Record_Successfully()
+    public void Add_Should_Create_A_Database_Record_Successfully()
     {
         //Arrange
 

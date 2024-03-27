@@ -1,5 +1,4 @@
 ﻿using CA_Microservices_DotNet.Common.Models;
-using CA_Microservices_DotNet.Domain.Entities;
 
 namespace CA_Microservices_DotNet.Domain.Interfaces.Services;
 
@@ -10,7 +9,7 @@ public interface IBookService
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<Book?> GetBook(int id, CancellationToken cancellationToken = default);
+    Task<BookModel?> GetBook(int id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets all the Books.

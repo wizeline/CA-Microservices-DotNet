@@ -18,6 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the IoC.
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IMemoryCacheService, MemoryCacheService>();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //Register GenericRepository of any type is required/requested.
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
