@@ -16,7 +16,7 @@ services:
       - MSSQL_PID=Evaluation
     networks:
       - ca-microservices-dotnet-network
-
+  
   ca-microservices-dotnet.api:
     container_name: ca-microservice-dotnet
     image: ${DOCKER_REGISTRY-}camicroservicesdotnetapi
